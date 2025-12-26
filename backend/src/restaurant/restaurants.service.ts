@@ -20,9 +20,14 @@ export class RestaurantsService {
     return this.repo.save(restaurant);
   }
 
+  // findAll() {
+  //   return this.repo.find();
+  // }
   findAll() {
-    return this.repo.find();
-  }
+  return this.repo.find({
+    relations: ["manager"], // 👈 REQUIRED
+  });
+}
 
   findOne(id: string) {
     return this.repo.findOne({ where: { id } });
@@ -35,17 +40,24 @@ export class RestaurantsService {
   delete(id: number) {
     return this.repo.delete(id);
   }
-  
-//   async createForManager(managerId: string, data:any) {
-//   const manager = await this.userRepo.findOne({ where: { id: managerId } });
 
-//   const restaurant = this.repo.create({
-//     ...data,
-//     manager: manager,   
-//   });
 
-//   return this.repo.save(restaurant);
-// }
+async findByManager(managerId: string) {
+  const restaurant = await this.repo.findOne({
+    where: {
+      manager: { id: managerId },
+    },
+    relations: ['manager'],
+  });
+
+  // If manager has no restaurant, return null (frontend will show "Add Restaurant")
+  if (!restaurant) {
+    return null;
+  }
+
+  return restaurant;
+}
+
 
 async createForManager(managerId: string, dto: CreateRestaurantDto) {
   const manager = await this.userRepo.findOne({ where: { id: managerId } });
@@ -55,15 +67,15 @@ async createForManager(managerId: string, dto: CreateRestaurantDto) {
     throw new ForbiddenException('Selected user is not a manager');
   }
 
-  if (!manager.country) {
-    throw new ForbiddenException('Manager has no country assigned');
-  }
+  // if (!manager.country) {
+  //   throw new ForbiddenException('Manager has no country assigned');
+  // }
 
-  if (dto.country !== manager.country) {
-    throw new ForbiddenException(
-      `Restaurant must be in the manager’s country (${manager.country})`
-    );
-  }
+  // if (dto.country !== manager.country) {
+  //   throw new ForbiddenException(
+  //     `Restaurant must be in the manager’s country (${manager.country})`
+  //   );
+  // }
 
   const restaurant = this.repo.create({
     ...dto,

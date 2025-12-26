@@ -6,6 +6,7 @@
     "@nestjs/platform-express": "^11.1.9",
     "@nestjs/typeorm": "^11.0.0",
     "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@nestjs/testing": "^11.1.9",
     "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
     "@types/passport-jwt": "^4.0.1"

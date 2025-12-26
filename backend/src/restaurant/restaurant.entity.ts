@@ -35,4 +35,5 @@ export class Restaurant {
 
   @ManyToOne(() => User, (user) => user.restaurants, { onDelete: 'CASCADE' })
   manager!: User;
+
 }

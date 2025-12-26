@@ -1,15 +1,14 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/cart/page": "app/cart/page.js",
-  "/checkout/page": "app/checkout/page.js",
-  "/dashboard/admin/page": "app/dashboard/admin/page.js",
+  "/dashboard/admin/main/page": "app/dashboard/admin/main/page.js",
+  "/dashboard/admin/orders/page": "app/dashboard/admin/orders/page.js",
+  "/dashboard/admin/users/page": "app/dashboard/admin/users/page.js",
   "/dashboard/manager/page": "app/dashboard/manager/page.js",
-  "/dashboard/member/page": "app/dashboard/member/page.js",
+  "/dashboard/manager/restaurant/page": "app/dashboard/manager/restaurant/page.js",
   "/login/page": "app/login/page.js",
-  "/menu/restaurant/[id]/page": "app/menu/restaurant/[id]/page.js",
   "/my-orders/page": "app/my-orders/page.js",
+  "/orders/managerOrder/[restaurantId]/page": "app/orders/managerOrder/[restaurantId]/page.js",
   "/page": "app/page.js",
   "/profile/page": "app/profile/page.js",
-  "/register/page": "app/register/page.js",
   "/restaurant/page": "app/restaurant/page.js"
 }

@@ -27,7 +27,74 @@ const useAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules
                 token: null
             });
         }
-    }));
+    })); // import { create } from "zustand";
+ // import api from "@/lib/axios";
+ // type User = {
+ //   id: string;
+ //   role: string;
+ // };
+ // type AuthStore = {
+ //   user: User | null;
+ //   loading: boolean;
+ //   setUser: (user: User | null) => void;
+ //   loadUser: () => Promise<void>;
+ //   logout: () => void;
+ // };
+ // export const useAuth = create<AuthStore>((set) => ({
+ //   user: null,
+ //   loading: true, // 🔑 important
+ //   setUser: (user) => set({ user }),
+ //   loadUser: async () => {
+ //     const token = Cookies.get("token");
+ //     if (!token) {
+ //       set({ user: null, loading: false });
+ //       return;
+ //     }
+ //     try {
+ //       const res = await api.get("/users/profile");
+ //       set({ user: res.data, loading: false });
+ //     } catch (err) {
+ //       Cookies.remove("token");
+ //       set({ user: null, loading: false });
+ //     }
+ //   },
+ //   logout: () => {
+ //     localStorage.remove("token");
+ //     set({ user: null });
+ //     window.location.href = "/login";
+ //   },
+ // }));
+ // import { create } from "zustand";
+ // type User = {
+ //   id: string;
+ //   role: string;
+ // };
+ // type AuthStore = {
+ //   user: User | null;
+ //   loading: boolean;
+ //   setUser: (user: User | null) => void;
+ //   restoreUser: () => void;
+ //   logout: () => void;
+ // };
+ // export const useAuth = create<AuthStore>((set) => ({
+ //   user: null,
+ //   loading: true,
+ //   setUser: (user) => set({ user, loading: false }),
+ //   restoreUser: () => {
+ //     const storedUser = localStorage.getItem("user");
+ //     if (storedUser) {
+ //       set({ user: JSON.parse(storedUser), loading: false });
+ //     } else {
+ //       set({ user: null, loading: false });
+ //     }
+ //   },
+ //   logout: () => {
+ //     localStorage.removeItem("token");
+ //     localStorage.removeItem("user");
+ //     set({ user: null });
+ //     window.location.href = "/login";
+ //   },
+ // }));
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
@@ -100,136 +167,265 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/Header.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// "use client";
+// import Link from "next/link";
+// import { useAuth } from "@/store/useAuth";
+// import { useCart } from "@/store/useCart"; // ⬅️ your cart store
+// export default function Header() {
+//   const { user, logout } = useAuth();
+//   const { cartItems } = useCart();
+//   return (
+//     <header className="w-full bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-orange-100">
+//       <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+//         {/* Logo */}
+//         <Link
+//           href="/"
+//           className="text-3xl font-extrabold text-orange-500 tracking-tight flex items-center gap-1"
+//         >
+//           <span className="rounded-full bg-orange-500 text-white px-2 py-1 text-xl">
+//             🍽
+//           </span>
+//           Food<span className="text-black">Hub</span>
+//         </Link>
+//         {/* Navigation */}
+//         <nav className="flex items-center gap-6">
+//           <Link
+//             href="/restaurant"
+//             className="text-black font-medium hover:text-orange-600 transition"
+//           >
+//             Restaurants
+//           </Link>
+//           {/* Cart Button */}
+//           <Link
+//             href="/cart"
+//             className="relative flex items-center text-black font-medium hover:text-orange-600 transition"
+//           >
+//             🛒 Cart
+//             {cartItems.length > 0 && (
+//               <span className="absolute -top-2 -right-3 bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full shadow-md">
+//                 {cartItems.length}
+//               </span>
+//             )}
+//           </Link>
+//           {!user && (
+//             <>
+//               <Link
+//                 href="/login"
+//                 className="text-black hover:text-orange-600 transition font-medium"
+//               >
+//                 Login
+//               </Link>
+//               <Link
+//                 href="/register"
+//                 className="bg-orange-500 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-orange-600 transition"
+//               >
+//                 Get Started
+//               </Link>
+//             </>
+//           )}
+//           {user && (
+//             <>
+//               <Link
+//                 href="/profile"
+//                 className="text-black hover:text-orange-600 transition font-medium"
+//               >
+//                 Profile
+//               </Link>
+//                <Link
+//               href="/my-orders"
+//               className="text-black font-medium hover:text-orange-600 transition"
+//             >
+//               My Orders
+//             </Link>
+//               <button
+//                 onClick={logout}
+//                 className="px-5 py-2 rounded-full bg-orange-500 text-white font-medium shadow-md hover:bg-orange-600 transition"
+//               >
+//                 Logout
+//               </button>
+//             </>
+//           )}
+//         </nav>
+//       </div>
+//     </header>
+//   );
+// }
+// "use client";
+// import { useEffect } from "react";
+// import Link from "next/link";
+// import { useAuth } from "@/store/useAuth";
+// import { useCart } from "@/store/useCart";
+// export default function Header() {
+//   const { user, logout, loadUser, loading } = useAuth();
+//   const { cartItems } = useCart();
+//   useEffect(() => {
+//     loadUser(); // 🔥 restore user on refresh
+//   }, [loadUser]);
+//   // 🚫 Prevent rendering until auth is loaded
+//   if (loading) return null;
+//   return (
+//     <header className="w-full bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-orange-100">
+//       <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+//         <Link href="/" className="text-3xl font-extrabold text-orange-500">
+//           🍽 Food<span className="text-black">Hub</span>
+//         </Link>
+//         <nav className="flex items-center gap-6">
+//           <Link href="/restaurant" className="text-black">
+//             Restaurants
+//           </Link>
+//           <Link href="/cart" className="relative text-black">
+//             🛒 Cart
+//             {cartItems.length > 0 && (
+//               <span className="absolute -top-2 -right-3 bg-orange-500 text-white text-xs px-2 rounded-full">
+//                 {cartItems.length}
+//               </span>
+//             )}
+//           </Link>
+//           {!user ? (
+//             <>
+//               <Link href="/login">Login</Link>
+//               <Link
+//                 href="/register"
+//                 className="bg-orange-500 text-white px-4 py-2 rounded-full"
+//               >
+//                 Get Started
+//               </Link>
+//             </>
+//           ) : (
+//             <>
+//               <Link href="/profile">Profile</Link>
+//               <Link href="/my-orders">My Orders</Link>
+//               <button
+//                 onClick={logout}
+//                 className="bg-orange-500 text-white px-4 py-2 rounded-full"
+//               >
+//                 Logout
+//               </button>
+//             </>
+//           )}
+//         </nav>
+//       </div>
+//     </header>
+//   );
+// }
 __turbopack_context__.s([
     "default",
     ()=>Header
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useAuth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/useAuth.ts [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useCart$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/useCart.ts [app-client] (ecmascript)"); // ⬅️ your cart store
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useCart$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/store/useCart.ts [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
 ;
+;
 function Header() {
     _s();
-    const { user, logout } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useAuth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])();
+    const { user, loading, restoreUser, logout } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useAuth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"])();
     const { cartItems } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useCart$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCart"])();
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Header.useEffect": ()=>{
+            restoreUser();
+        }
+    }["Header.useEffect"], [
+        restoreUser
+    ]);
+    if (loading) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-        className: "w-full bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-orange-100",
+        className: "bg-white shadow sticky top-0 z-50",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "max-w-7xl mx-auto flex justify-between items-center py-4 px-6",
+            className: "max-w-7xl mx-auto flex justify-between p-4",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                     href: "/",
-                    className: "text-3xl font-extrabold text-orange-500 tracking-tight flex items-center gap-1",
+                    className: "text-2xl font-bold text-orange-500",
                     children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "rounded-full bg-orange-500 text-white px-2 py-1 text-xl",
-                            children: "🍽"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 20,
-                            columnNumber: 11
-                        }, this),
-                        "Food",
+                        "🍽 Food",
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             className: "text-black",
                             children: "Hub"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 23,
-                            columnNumber: 15
+                            lineNumber: 183,
+                            columnNumber: 18
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.tsx",
-                    lineNumber: 16,
+                    lineNumber: 182,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                    className: "flex items-center gap-6",
+                    className: "flex gap-4 items-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/restaurant",
-                            className: "text-black font-medium hover:text-orange-600 transition",
                             children: "Restaurants"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 28,
+                            lineNumber: 187,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/cart",
-                            className: "relative flex items-center text-black font-medium hover:text-orange-600 transition",
                             children: [
-                                "🛒 Cart",
-                                cartItems.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "absolute -top-2 -right-3 bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full shadow-md",
-                                    children: cartItems.length
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 42,
-                                    columnNumber: 15
-                                }, this)
+                                "Cart (",
+                                cartItems.length,
+                                ")"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 36,
+                            lineNumber: 188,
                             columnNumber: 11
                         }, this),
-                        !user && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                        !user ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/login",
-                                    className: "text-black hover:text-orange-600 transition font-medium",
                                     children: "Login"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 50,
+                                    lineNumber: 194,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/register",
-                                    className: "bg-orange-500 text-white px-5 py-2 rounded-full font-medium shadow-md hover:bg-orange-600 transition",
-                                    children: "Get Started"
+                                    children: "Register"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 56,
+                                    lineNumber: 195,
                                     columnNumber: 15
                                 }, this)
                             ]
-                        }, void 0, true),
-                        user && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                        }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/profile",
-                                    className: "text-black hover:text-orange-600 transition font-medium",
                                     children: "Profile"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 67,
+                                    lineNumber: 199,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/my-orders",
-                                    className: "text-black font-medium hover:text-orange-600 transition",
                                     children: "My Orders"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 73,
-                                    columnNumber: 16
+                                    lineNumber: 200,
+                                    columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: logout,
-                                    className: "px-5 py-2 rounded-full bg-orange-500 text-white font-medium shadow-md hover:bg-orange-600 transition",
                                     children: "Logout"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Header.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 201,
                                     columnNumber: 15
                                 }, this)
                             ]
@@ -237,22 +433,22 @@ function Header() {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.tsx",
-                    lineNumber: 27,
+                    lineNumber: 186,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/Header.tsx",
-            lineNumber: 13,
+            lineNumber: 181,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Header.tsx",
-        lineNumber: 12,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
-_s(Header, "cVDrbeD/WfyMjzrrxSGRfPMlFFs=", false, function() {
+_s(Header, "8EfU9QI2JSaMeDRIi2gmxUrSlO4=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useAuth$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useAuth"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$store$2f$useCart$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCart"]

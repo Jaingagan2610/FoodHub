@@ -104,20 +104,31 @@ module.exports = mod;
 "[project]/src/lib/axios.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// import axios from 'axios';
+// import Cookies from 'js-cookie';
+// const api = axios.create({
+//   baseURL: 'http://localhost:4000', // NestJS backend
+//   withCredentials: true,
+// });
+// api.interceptors.request.use((config) => {
+//   const token = Cookies.get('token');
+//   if (token) config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
+// export default api;
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/js-cookie/dist/js.cookie.mjs [app-ssr] (ecmascript)");
-;
 ;
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'http://localhost:4000'
+    baseURL: "http://localhost:4000",
+    withCredentials: true
 });
 api.interceptors.request.use((config)=>{
-    const token = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get('token');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
     return config;
 });
 const __TURBOPACK__default__export__ = api;

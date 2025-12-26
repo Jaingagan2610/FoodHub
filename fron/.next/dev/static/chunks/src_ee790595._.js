@@ -2,20 +2,35 @@
 "[project]/src/lib/axios.ts [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+// import axios from 'axios';
+// import Cookies from 'js-cookie';
+// const api = axios.create({
+//   baseURL: 'http://localhost:4000', // NestJS backend
+//   withCredentials: true,
+// });
+// api.interceptors.request.use((config) => {
+//   const token = Cookies.get('token');
+//   if (token) config.headers.Authorization = `Bearer ${token}`;
+//   return config;
+// });
+// export default api;
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/js-cookie/dist/js.cookie.mjs [app-client] (ecmascript)");
-;
 ;
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
-    baseURL: 'http://localhost:4000'
+    baseURL: "http://localhost:4000",
+    withCredentials: true
 });
 api.interceptors.request.use((config)=>{
-    const token = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$js$2d$cookie$2f$dist$2f$js$2e$cookie$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get('token');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    if ("TURBOPACK compile-time truthy", 1) {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    }
     return config;
 });
 const __TURBOPACK__default__export__ = api;
@@ -154,23 +169,44 @@ function MemberDashboard() {
     const [orders, setOrders] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     // Fetch user profile + orders
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const profileRes = await api.get("/users/profile");
+    //       setUser(profileRes.data);
+    //       const ordersRes = await api.get("/orders/my-orders");
+    //       setOrders(ordersRes.data);
+    //     } catch (err) {
+    //       console.error("Error loading dashboard:", err);
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   };
+    //   fetchData();
+    // }, []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "MemberDashboard.useEffect": ()=>{
+            let isMounted = true;
             const fetchData = {
                 "MemberDashboard.useEffect.fetchData": async ()=>{
                     try {
                         const profileRes = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$axios$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/users/profile");
-                        setUser(profileRes.data);
+                        if (isMounted) setUser(profileRes.data);
                         const ordersRes = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$axios$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get("/orders/my-orders");
-                        setOrders(ordersRes.data);
+                        if (isMounted) setOrders(ordersRes.data);
                     } catch (err) {
                         console.error("Error loading dashboard:", err);
                     } finally{
-                        setLoading(false);
+                        if (isMounted) setLoading(false);
                     }
                 }
             }["MemberDashboard.useEffect.fetchData"];
             fetchData();
+            return ({
+                "MemberDashboard.useEffect": ()=>{
+                    isMounted = false;
+                }
+            })["MemberDashboard.useEffect"];
         }
     }["MemberDashboard.useEffect"], []);
     if (loading) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -178,7 +214,7 @@ function MemberDashboard() {
         children: "Loading..."
     }, void 0, false, {
         fileName: "[project]/src/app/dashboard/member/page.tsx",
-        lineNumber: 152,
+        lineNumber: 176,
         columnNumber: 23
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -193,14 +229,14 @@ function MemberDashboard() {
                         children: user?.name
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 157,
+                        lineNumber: 181,
                         columnNumber: 18
                     }, this),
                     " 👋"
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 156,
+                lineNumber: 180,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -213,14 +249,14 @@ function MemberDashboard() {
                                 className: "text-orange-600"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 163,
+                                lineNumber: 187,
                                 columnNumber: 11
                             }, this),
                             " Profile Information"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 162,
+                        lineNumber: 186,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -232,7 +268,7 @@ function MemberDashboard() {
                                         children: "Name:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 191,
                                         columnNumber: 14
                                     }, this),
                                     " ",
@@ -240,7 +276,7 @@ function MemberDashboard() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 167,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -249,7 +285,7 @@ function MemberDashboard() {
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 192,
                                         columnNumber: 14
                                     }, this),
                                     " ",
@@ -257,7 +293,7 @@ function MemberDashboard() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 168,
+                                lineNumber: 192,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -266,7 +302,7 @@ function MemberDashboard() {
                                         children: "Role:"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                        lineNumber: 169,
+                                        lineNumber: 193,
                                         columnNumber: 14
                                     }, this),
                                     " ",
@@ -274,19 +310,19 @@ function MemberDashboard() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 169,
+                                lineNumber: 193,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 166,
+                        lineNumber: 190,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 161,
+                lineNumber: 185,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -294,7 +330,7 @@ function MemberDashboard() {
                 children: "Quick Actions"
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 174,
+                lineNumber: 198,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -308,7 +344,7 @@ function MemberDashboard() {
                                 className: "w-12 h-12 text-orange-600 mb-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 181,
+                                lineNumber: 205,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -316,13 +352,13 @@ function MemberDashboard() {
                                 children: "My Orders"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 182,
+                                lineNumber: 206,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 177,
+                        lineNumber: 201,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -333,7 +369,7 @@ function MemberDashboard() {
                                 className: "w-12 h-12 text-orange-600 mb-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 189,
+                                lineNumber: 213,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -341,13 +377,13 @@ function MemberDashboard() {
                                 children: "My Cart"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 190,
+                                lineNumber: 214,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 185,
+                        lineNumber: 209,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -358,7 +394,7 @@ function MemberDashboard() {
                                 className: "w-12 h-12 text-orange-600 mb-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 197,
+                                lineNumber: 221,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -366,19 +402,19 @@ function MemberDashboard() {
                                 children: "Explore Restaurants"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                lineNumber: 198,
+                                lineNumber: 222,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 193,
+                        lineNumber: 217,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 176,
+                lineNumber: 200,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -386,7 +422,7 @@ function MemberDashboard() {
                 children: "Recent Orders"
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 203,
+                lineNumber: 227,
                 columnNumber: 7
             }, this),
             orders.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -394,7 +430,7 @@ function MemberDashboard() {
                 children: "You haven’t placed any orders yet."
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 206,
+                lineNumber: 230,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "space-y-4",
@@ -413,7 +449,7 @@ function MemberDashboard() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                            lineNumber: 216,
+                                            lineNumber: 240,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -425,19 +461,19 @@ function MemberDashboard() {
                                                     children: order.status
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                                    lineNumber: 220,
+                                                    lineNumber: 244,
                                                     columnNumber: 29
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                            lineNumber: 219,
+                                            lineNumber: 243,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                    lineNumber: 215,
+                                    lineNumber: 239,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -448,29 +484,29 @@ function MemberDashboard() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/dashboard/member/page.tsx",
-                                    lineNumber: 223,
+                                    lineNumber: 247,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/member/page.tsx",
-                            lineNumber: 214,
+                            lineNumber: 238,
                             columnNumber: 15
                         }, this)
                     }, order.id, false, {
                         fileName: "[project]/src/app/dashboard/member/page.tsx",
-                        lineNumber: 210,
+                        lineNumber: 234,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/member/page.tsx",
-                lineNumber: 208,
+                lineNumber: 232,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/member/page.tsx",
-        lineNumber: 155,
+        lineNumber: 179,
         columnNumber: 5
     }, this);
 }

@@ -10,7 +10,7 @@ export default function MyOrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await api.get("/orders/my");
+      const res = await api.get("/orders/my-orders");
       setOrders(res.data);
     } catch (err) {
       console.error("Error fetching orders:", err);

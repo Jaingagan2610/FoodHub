@@ -45,6 +45,11 @@ let UsersService = class UsersService {
     constructor(repo) {
         this.repo = repo;
     }
+    async findAll() {
+        return this.repo.find({
+            select: ["id", "name", "email", "role", "country", "createdAt"],
+        });
+    }
     async register(data) {
         const exist = await this.repo.findOne({ where: { email: data.email } });
         if (exist)
@@ -56,11 +61,27 @@ let UsersService = class UsersService {
     async findByEmail(email) {
         return this.repo.findOne({ where: { email } });
     }
+    // async getProfile(userId: string) {
+    // return await this.repo.findOne({
+    //   where: { id: userId },
+    //   select: ["id", "name", "email", "role", "country", "createdAt"] // NO PASSWORD
+    // });
     async getProfile(userId) {
-        return this.repo.findOne({
+        const user = await this.repo.findOne({
             where: { id: userId },
-            select: ["id", "name", "email", "role", "country", "createdAt"] // NO PASSWORD
+            select: [
+                "id",
+                "name",
+                "email",
+                "role",
+                "country",
+                "createdAt",
+            ],
         });
+        if (!user) {
+            throw new common_1.NotFoundException("User not found");
+        }
+        return user;
     }
 };
 exports.UsersService = UsersService;

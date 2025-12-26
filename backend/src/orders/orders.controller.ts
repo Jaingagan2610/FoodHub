@@ -18,7 +18,7 @@ export class OrdersController {
   }
 
   // USER: Get own orders
-  @Get('my')
+  @Get('my-orders')
   @UseGuards(JwtAuthGuard)
   myOrders(@Req() req:any) {
     return this.service.findMyOrders(req.user.id);
@@ -42,10 +42,16 @@ updateStatus(
   return this.service.updateStatus(id, dto.status);
 }
 
+// @Get('manager')
+// @Roles('manager')
+// @UseGuards(JwtAuthGuard, RolesGuard)
+// getManagerOrders(@Req() req:any) {
+//   return this.service.findForManager(req.user.id);
+// }
 @Get('manager')
 @Roles('manager')
 @UseGuards(JwtAuthGuard, RolesGuard)
-getManagerOrders(@Req() req:any) {
-  return this.service.findForManager(req.user.id);
+getManagerOrders(@Req() req: any) {
+  return this.service.findOrdersForManager(req.user.id);
 }
 }

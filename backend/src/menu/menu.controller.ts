@@ -11,7 +11,7 @@ export class MenuController {
 
   // ADMIN ONLY: Create menu item
   @Post()
-  @Roles('admin')
+  @Roles('admin',"manager")
   @UseGuards(JwtAuthGuard, RolesGuard)
   create(@Body() dto: CreateMenuiteamDto) {
     return this.service.create(dto);

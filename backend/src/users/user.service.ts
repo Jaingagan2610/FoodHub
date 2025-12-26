@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -10,6 +10,12 @@ export class UsersService {
     @InjectRepository(User)
     private repo: Repository<User>,
   ) {}
+
+  async findAll() {
+  return this.repo.find({
+    select: ["id", "name", "email", "role", "country", "createdAt"],
+  });
+}
 
   async register(data: any) {
     const exist = await this.repo.findOne({ where: { email: data.email } });
@@ -26,11 +32,31 @@ export class UsersService {
     return this.repo.findOne({ where: { email } });
   }
 
+  // async getProfile(userId: string) {
+  // return await this.repo.findOne({
+  //   where: { id: userId },
+  //   select: ["id", "name", "email", "role", "country", "createdAt"] // NO PASSWORD
+  // });
   async getProfile(userId: string) {
-  return this.repo.findOne({
+  const user = await this.repo.findOne({
     where: { id: userId },
-    select: ["id", "name", "email", "role", "country", "createdAt"] // NO PASSWORD
+    select: [
+      "id",
+      "name",
+      "email",
+      "role",
+      "country",
+      "createdAt",
+    ],
   });
+
+  if (!user) {
+    throw new NotFoundException("User not found");
+  }
+
+  return user;
 }
 
 }
+
+

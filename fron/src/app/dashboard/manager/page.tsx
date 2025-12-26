@@ -24,13 +24,19 @@ export default function ManagerDashboard() {
         setUser(userRes.data);
 
         const restRes = await api.get("/restaurants/my-restaurant");
-        setRestaurant(restRes.data);
+        console.log("my-restaurant",restRes);
+        if (restRes.data) {
+  setRestaurant(restRes.data);
+} else {
+  setRestaurant(null); 
+}
 
         if (restRes.data?.id) {
           const menuRes = await api.get(`/menu/restaurant/${restRes.data.id}`);
           setMenuItems(menuRes.data);
 
-          const orderRes = await api.get(`/orders/restaurant/${restRes.data.id}`);
+          const orderRes = await api.get(`/orders/manager`);
+          console.log("orders",orderRes);
           setOrders(orderRes.data);
         }
       } catch (err) {
@@ -53,25 +59,42 @@ export default function ManagerDashboard() {
       </h1>
 
       {/* Restaurant Info */}
-      {restaurant ? (
-        <div className="bg-white p-6 shadow-md border rounded-2xl mb-8">
-          <h2 className="text-2xl font-bold text-black flex items-center gap-2">
-            <Store className="text-orange-600" /> Your Restaurant
-          </h2>
+{restaurant ? (
+  <div className="bg-white p-6 shadow-md border rounded-2xl mb-8">
+    <h2 className="text-2xl font-bold text-black flex items-center gap-2">
+      <Store className="text-orange-600" /> Your Restaurant
+    </h2>
 
-          <p className="text-xl font-semibold mt-3">{restaurant.name}</p>
-          <p className="text-gray-600">{restaurant.location}</p>
+    <p className="text-xl font-semibold mt-3">{restaurant.name}</p>
+    <p className="text-gray-600">{restaurant.location}</p>
 
-          <Link
-            href={`/restaurant/edit/${restaurant.id}`}
-            className="mt-4 inline-block bg-orange-600 text-white py-2 px-5 rounded-lg hover:bg-orange-700"
-          >
-            Edit Restaurant
-          </Link>
-        </div>
-      ) : (
-        <p className="text-gray-700">No restaurant assigned to your account.</p>
-      )}
+    <Link
+      href={`/restaurant/edit/${restaurant.id}`}
+      className="mt-4 inline-block bg-orange-600 text-white py-2 px-5 rounded-lg hover:bg-orange-700"
+    >
+      Edit Restaurant
+    </Link>
+  </div>
+) : (
+  <div className="bg-white p-6 shadow-md border rounded-2xl mb-8 text-center">
+    <h2 className="text-2xl font-bold text-black mb-3">
+      You haven’t created a restaurant yet
+    </h2>
+
+    <p className="text-gray-600 mb-5">
+      Create your restaurant to start adding menu items and receiving orders.
+    </p>
+
+    <Link
+      href="/addRestaurant"
+      className="inline-flex items-center gap-2 bg-orange-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-orange-700 transition"
+    >
+      <PlusCircle className="w-5 h-5" />
+      Add Restaurant
+    </Link>
+  </div>
+)}
+
 
       {/* Quick Stats */}
       <div className="grid md:grid-cols-3 gap-6 mb-10">
@@ -95,33 +118,46 @@ export default function ManagerDashboard() {
       </div>
 
       {/* Quick Actions */}
-      <h2 className="text-2xl font-bold text-black mb-4">Quick Actions</h2>
+      
+      {restaurant && (
+  <>
+    <h2 className="text-2xl font-bold text-black mb-4">Quick Actions</h2>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <Link
-          href={`/menu/add/${restaurant?.id}`}
-          className="bg-orange-600 text-white p-6 rounded-xl shadow-md hover:bg-orange-700 flex flex-col items-center"
-        >
-          <PlusCircle className="w-12 h-12 mb-3" />
-          <span className="text-xl font-semibold">Add Menu Item</span>
-        </Link>
+    <div className="grid md:grid-cols-3 gap-6">
+      <Link
+        href={`/menu/add/${restaurant.id}`}
+        className="bg-orange-600 text-white p-6 rounded-xl shadow-md hover:bg-orange-700 flex flex-col items-center"
+      >
+        <PlusCircle className="w-12 h-12 mb-3" />
+        <span className="text-xl font-semibold">Add Menu Item</span>
+      </Link>
 
-        <Link
-          href={`/orders/restaurant/${restaurant?.id}`}
-          className="bg-white border shadow-md p-6 rounded-xl hover:shadow-lg transition text-center flex flex-col items-center"
-        >
-          <ClipboardList className="w-12 h-12 text-orange-600 mb-3" />
-          <span className="text-xl font-semibold text-black">View Orders</span>
-        </Link>
+      {/* <Link
+        href={`/orders/managerOrder/${restaurant.id}`}
+        className="bg-white border shadow-md p-6 rounded-xl hover:shadow-lg transition text-center flex flex-col items-center"
+      >
+        <ClipboardList className="w-12 h-12 text-orange-600 mb-3" />
+        <span className="text-xl font-semibold text-black">View Orders</span>
+      </Link> */}
+      <Link
+  href={`/orders/managerOrder/${restaurant.id}`}
+  className="bg-white border shadow-md p-6 rounded-xl hover:shadow-lg transition text-center flex flex-col items-center"
+>
+  <ClipboardList className="w-12 h-12 text-orange-600 mb-3" />
+  <span className="text-xl font-semibold text-black">View Orders</span>
+</Link>
 
-        <Link
-          href={`/menu/restaurant/${restaurant?.id}`}
-          className="bg-white border shadow-md p-6 rounded-xl hover:shadow-lg transition text-center flex flex-col items-center"
-        >
-          <Utensils className="w-12 h-12 text-orange-600 mb-3" />
-          <span className="text-xl font-semibold text-black">View Menu</span>
-        </Link>
-      </div>
+      <Link
+        href={`/menu/restaurant/${restaurant.id}`}
+        className="bg-white border shadow-md p-6 rounded-xl hover:shadow-lg transition text-center flex flex-col items-center"
+      >
+        <Utensils className="w-12 h-12 text-orange-600 mb-3" />
+        <span className="text-xl font-semibold text-black">View Menu</span>
+      </Link>
+    </div>
+  </>
+)}
+
     </div>
   );
 }

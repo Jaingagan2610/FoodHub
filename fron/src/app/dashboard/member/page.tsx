@@ -131,23 +131,47 @@ export default function MemberDashboard() {
   const [loading, setLoading] = useState(true);
 
   // Fetch user profile + orders
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const profileRes = await api.get("/users/profile");
+  //       setUser(profileRes.data);
+
+  //       const ordersRes = await api.get("/orders/my-orders");
+  //       setOrders(ordersRes.data);
+  //     } catch (err) {
+  //       console.error("Error loading dashboard:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const profileRes = await api.get("/users/profile");
-        setUser(profileRes.data);
+  let isMounted = true;
 
-        const ordersRes = await api.get("/orders/my-orders");
-        setOrders(ordersRes.data);
-      } catch (err) {
-        console.error("Error loading dashboard:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const profileRes = await api.get("/users/profile");
+      if (isMounted) setUser(profileRes.data);
 
-    fetchData();
-  }, []);
+      const ordersRes = await api.get("/orders/my-orders");
+      if (isMounted) setOrders(ordersRes.data);
+    } catch (err) {
+      console.error("Error loading dashboard:", err);
+    } finally {
+      if (isMounted) setLoading(false);
+    }
+  };
+
+  fetchData();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
+
 
   if (loading) return <p className="p-10 text-xl">Loading...</p>;
 

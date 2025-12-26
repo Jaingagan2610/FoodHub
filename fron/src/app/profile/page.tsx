@@ -31,6 +31,7 @@ export default function ProfilePage() {
 
   const fetchUser = async () => {
     try {
+      console.log("hello00");
       const res = await api.get("/users/profile"); // ✔ Correct API
       setUser(res.data);
       console.log("hello",res.data)

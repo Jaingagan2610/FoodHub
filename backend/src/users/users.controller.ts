@@ -13,7 +13,7 @@ export class UsersController {
   @Roles('admin')
   @UseGuards(JwtAuthGuard, RolesGuard)
   findAllUsers() {
-    return "Only admin can see this!";
+   return this.usersService.findAll();
   }
 
 //   @Get('profile')
@@ -23,7 +23,7 @@ export class UsersController {
 // }
 @Get('profile')
 @UseGuards(JwtAuthGuard)
-async getProfile(@Req() req: any) {
+getProfile(@Req() req: any) {
   return this.usersService.getProfile(req.user.id);
 }
 

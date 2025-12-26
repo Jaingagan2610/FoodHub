@@ -5,6 +5,7 @@ import api from "@/lib/axios";
 import { useAuth } from "@/store/useAuth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from 'js-cookie';
 
 export default function LoginPage() {
   const loginStore = useAuth();
@@ -12,19 +13,24 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
 
   const handleLogin = async () => {
-    try {
-      const res = await api.post("/auth/login", form);
-      loginStore.login(res.data);
+  try {
+    const res = await api.post("/auth/login", form);
 
-      const role = res.data.user.role;
-      if (role === "admin") router.push("/dashboard/admin");
-      else if (role === "manager") router.push("/dashboard/manager");
-      else router.push("/dashboard/member");
-    } catch (error) {
-      alert("Invalid Credentials");
-    }
-  };
+    // ✅ Persist auth
+    localStorage.setItem("token", res.data.access_token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
 
+    loginStore.setUser(res.data.user);
+
+    const role = res.data.user.role;
+    if (role === "admin") router.push("/dashboard/admin/main");
+    else if (role === "manager") router.push("/dashboard/manager");
+    else router.push("/dashboard/member");
+
+  } catch {
+    alert("Invalid Credentials");
+  }
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center px-4 relative">
       

@@ -24,14 +24,14 @@ let UsersController = class UsersController {
         this.usersService = usersService;
     }
     findAllUsers() {
-        return "Only admin can see this!";
+        return this.usersService.findAll();
     }
     //   @Get('profile')
     //   @UseGuards(JwtAuthGuard)
     //   getProfile(@Req() req:any) {
     //   return req.user;
     // }
-    async getProfile(req) {
+    getProfile(req) {
         return this.usersService.getProfile(req.user.id);
     }
     register(dto) {
@@ -53,7 +53,7 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getProfile", null);
 __decorate([
     (0, common_1.Post)('register'),

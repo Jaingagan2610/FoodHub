@@ -27,6 +27,9 @@ let RestaurantsController = class RestaurantsController {
     getAll() {
         return this.service.findAll();
     }
+    getMyRestaurant(req) {
+        return this.service.findByManager(req.user.id);
+    }
     getOne(id) {
         return this.service.findOne(id);
     }
@@ -56,6 +59,15 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], RestaurantsController.prototype, "getAll", null);
+__decorate([
+    (0, common_1.Get)('my-restaurant'),
+    (0, roles_decorator_1.Roles)('manager'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], RestaurantsController.prototype, "getMyRestaurant", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -93,7 +105,7 @@ __decorate([
 ], RestaurantsController.prototype, "remove", null);
 __decorate([
     (0, common_1.Post)('manager'),
-    (0, roles_decorator_1.Roles)('manager'),
+    (0, roles_decorator_1.Roles)('manager', 'admin'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),

@@ -1,4 +1,5 @@
 export class CreateRestaurantDto {
+  managerId: string;
   name: string;
   phone: string;
   description:string;

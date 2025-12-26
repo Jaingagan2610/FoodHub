@@ -39,8 +39,14 @@ let OrdersController = class OrdersController {
     updateStatus(id, dto) {
         return this.service.updateStatus(id, dto.status);
     }
+    // @Get('manager')
+    // @Roles('manager')
+    // @UseGuards(JwtAuthGuard, RolesGuard)
+    // getManagerOrders(@Req() req:any) {
+    //   return this.service.findForManager(req.user.id);
+    // }
     getManagerOrders(req) {
-        return this.service.findForManager(req.user.id);
+        return this.service.findOrdersForManager(req.user.id);
     }
 };
 exports.OrdersController = OrdersController;
@@ -54,7 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)('my'),
+    (0, common_1.Get)('my-orders'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),

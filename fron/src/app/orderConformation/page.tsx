@@ -2,12 +2,20 @@
 
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function OrderConfirmationPage() {
   // Read details passed via query params or router state
   const params = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
   const orderId = params.get("orderId");
   const paymentId = params.get("paymentId");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // ✅ Prevent SSR mismatch
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-50 p-6">
@@ -23,14 +31,22 @@ export default function OrderConfirmationPage() {
           Thank you for your order. Your payment has been successfully processed.
         </p>
 
-        <div className="mt-6 bg-gray-100 p-4 rounded-lg text-left">
+        {/* <div className="mt-6 bg-gray-100 p-4 rounded-lg text-left">
           <p className="text-gray-800">
             <strong>Order ID:</strong> {orderId || "N/A"}
           </p>
           <p className="text-gray-800 mt-2">
             <strong>Payment ID:</strong> {paymentId || "N/A"}
           </p>
-        </div>
+        </div> */}
+        <div className="mt-6 bg-gray-100 p-4 rounded-lg text-left">
+      <p className="text-black">
+        <strong>Order ID:</strong> {orderId ?? "N/A"}
+      </p>
+      <p className="text-black mt-2">
+        <strong>Payment ID:</strong> {paymentId ?? "N/A"}
+      </p>
+    </div>
 
         <Link
           href="/restaurant"

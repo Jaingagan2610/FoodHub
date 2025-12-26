@@ -15,11 +15,17 @@ export class RestaurantsController {
     return this.service.findAll();
   }
 
-  @Get(':id')
+  
+ @Get('my-restaurant')
+@Roles('manager')
+@UseGuards(JwtAuthGuard, RolesGuard)
+getMyRestaurant(@Req() req: any) {
+  return this.service.findByManager(req.user.id);
+}
+@Get(':id')
 getOne(@Param('id') id: string) {
   return this.service.findOne(id);
 }
- 
 
   // ADMIN: Create restaurant
   @Post()
@@ -46,7 +52,7 @@ getOne(@Param('id') id: string) {
   }
 
   @Post('manager')
-  @Roles('manager')
+  @Roles('manager','admin')
   @UseGuards(JwtAuthGuard, RolesGuard)
   createRestaurantForManager(@Req() req:any, @Body() dto:any) {
   return this.service.createForManager(req.user.id, dto);
